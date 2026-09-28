@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rupal Porwal — Full-Stack Software Engineer</title>
+  <meta name="description"
+    content="Rupal Porwal — Full-Stack Software Engineer based in Indore, India. React, Node.js, enterprise systems and AI-assisted workflows.">
+  <meta name="theme-color" content="#050506">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2218%22 fill=%22%23d7ff3f%22/><text x=%2250%22 y=%2272%22 font-size=%2260%22 font-weight=%22800%22 text-anchor=%22middle%22 font-family=%22sans-serif%22>RP</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050506;
+      --text: #f3f4ee;
+      --muted: #a3a59e;
+      --dim: #7d7f78;
+      --on: #0a0d02;
+      --line: rgba(255, 255, 255, .09);
+      --accent: #d7ff3f;
+      --accent-dim: rgba(215, 255, 63, .13);
+      --card: rgba(255, 255, 255, .03);
+      --max: 1140px;
+      --ease: cubic-bezier(.19, 1, .22, 1);
+      --disp: "Space Grotesk", Inter, system-ui, sans-serif
+    }
+
+    [data-theme="light"] {
+      --bg: #f4f4ee;
+      --text: #0c0c0a;
+      --muted: #4a4c46;
+      --dim: #6b6d66;
+      --on: #fff;
+      --line: rgba(0, 0, 0, .11);
+      --accent: #587300;
+      --accent-dim: rgba(88, 115, 0, .12);
+      --card: rgba(0, 0, 0, .035)
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.65 Inter, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background .4s, color .4s
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      cursor: pointer
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--disp);
+      letter-spacing: -.03em;
+      font-weight: 600
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px
+    }
+
+    canvas#field {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: 300
+    }
+
+    .wrap {
+      width: min(calc(100% - 40px), var(--max));
+      margin: auto
+    }
+
+    section {
+      padding: 120px 0;
+      position: relative
+    }
+
+    .mono {
+      font-family: "JetBrains Mono", monospace
+    }
+
+    /* preloader */
+    #pre {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: #050506;
+      display: grid;
+      place-items: center;
+      transition: opacity .8s, visibility .8s;
+      animation: safe 0s 4s forwards
+    }
+
+    #pre.done {
+      opacity: 0;
+      visibility: hidden
+    }
+
+    @keyframes safe {
+      to {
+        visibility: hidden
+      }
+    }
+
+    .pre-box {
+      position: relative;
+      padding: 34px 46px;
+      text-align: center
+    }
+
+    .pre-box::before,
+    .pre-box::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #d7ff3f;
+      opacity: .5;
+      transform: scaleX(0);
+      animation: line 1.2s var(--ease) .1s forwards
+    }
+
+    .pre-box::before {
+      top: 0
+    }
+
+    .pre-box::after {
+      bottom: 0
+    }
+
+    @keyframes line {
+      to {
+        transform: scaleX(1)
+      }
+    }
+
+    .pre-name {
+      font: 700 clamp(18px, 3.2vw, 30px) var(--disp);
+      color: #d7ff3f;
+      letter-spacing: .9em;
+      filter: blur(8px);
+      opacity: .35;
+      animation: resolve 1.5s var(--ease) .2s forwards;
+      padding-left: .9em
+    }
+
+    @keyframes resolve {
+      to {
+        letter-spacing: .28em;
+        filter: blur(0);
+        opacity: 1;
+        padding-left: .28em
+      }
+    }
+
+    /* nav */
+    .nav {
+      position: fixed;
+      top: 14px;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: center;
+      transform: translateY(-110px);
+      transition: transform .9s var(--ease)
+    }
+
+    body.ready .nav {
+      transform: none
+    }
+
+    .pill {
+      width: min(calc(100% - 28px), var(--max));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(10, 10, 11, .6);
+      backdrop-filter: blur(16px)
+    }
+
+    [data-theme="light"] .pill {
+      background: rgba(255, 255, 255, .72)
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: var(--accent);
+      color: var(--on);
+      display: grid;
+      place-items: center;
+      font: 700 14px var(--disp)
+    }
+
+    .tabs {
+      display: flex;
+      gap: 2px;
+      padding: 3px;
+      border-radius: 999px;
+      background: var(--card)
+    }
+
+    .tabs a {
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--muted);
+      transition: .25s
+    }
+
+    .tabs a:hover {
+      color: var(--text)
+    }
+
+    .tabs a.on {
+      background: var(--text);
+      color: var(--bg)
+    }
+
+    .nav-r {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .cta {
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--on);
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .round {
+      width: 37px;
+      height: 37px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      transition: .25s
+    }
+
+    .round:hover {
+      color: var(--text);
+      border-color: var(--accent)
+    }
+
+    @media(max-width:700px) {
+      .tabs {
+        display: none
+      }
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font: 700 12px "JetBrains Mono", monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px
+    }
+
+    .eyebrow::after {
+      content: "";
+      width: 46px;
+      height: 1px;
+      background: var(--line)
+    }
+
+    .title {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.06;
+      font-weight: 500
+    }
+
+    .sub {
+      color: var(--muted);
+      max-width: 520px;
+      margin-top: 14px;
+      font-size: 17px
+    }
+
+    /* reveal */
+    .js .rv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .9s var(--ease), transform .9s var(--ease)
+    }
+
+    .js .rv.on {
+      opacity: 1;
+      transform: none
+    }
+
+    /* hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 110px 0 70px
+    }
+
+    .name {
+      font-size: clamp(46px, 9vw, 132px);
+      line-height: 1;
+      letter-spacing: -.035em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin: 6px 0 0 -.03em
+    }
+
+    .name b {
+      color: var(--accent);
+      font-weight: 700
+    }
+
+    .role {
+      margin-top: 18px;
+      font: 600 clamp(18px, 2.2vw, 26px) var(--disp);
+      color: var(--muted);
+      letter-spacing: -.01em
+    }
+
+    .lede {
+      margin-top: 14px;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 18px
+    }
+
+    .hero-cta {
+      margin-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .btn {
+      padding: 14px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      transition: .3s;
+      background: var(--card)
+    }
+
+    .btn.p {
+      background: var(--accent);
+      color: var(--on);
+      border-color: var(--accent)
+    }
+
+    .btn:hover {
+      border-color: var(--accent)
+    }
+
+    .btn.p:hover {
+      box-shadow: 0 0 30px var(--accent-dim)
+    }
+
+    .social {
+      margin-top: 28px;
+      display: flex;
+      gap: 24px;
+      font: 700 12px "JetBrains Mono", monospace;
+      letter-spacing: .14em;
+      color: var(--dim)
+    }
+
+    .social a:hover {
+      color: var(--accent)
+    }
+
+    /* skills */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 48px
+    }
+
+    .card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      backdrop-filter: blur(6px);
+      transition: border-color .3s, transform .5s var(--ease)
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px)
+    }
+
+    .card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .card h3 i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px
+    }
+
+    .tags span {
+      font: 500 12.5px "JetBrains Mono", monospace;
+      padding: 6px 11px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--muted)
+    }
+
+    /* experience */
+    .job {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 24px 48px;
+      padding: 34px 0;
+      border-top: 1px solid var(--line)
+    }
+
+    .job:last-of-type {
+      border-bottom: 1px solid var(--line)
+    }
+
+    .job .when {
+      font: 700 12px "JetBrains Mono", monospace;
+      letter-spacing: .1em;
+      color: var(--accent);
+      padding-top: 6px
+    }
+
+    .job .where {
+      font: 500 12px "JetBrains Mono", monospace;
+      color: var(--dim);
+      margin-top: 6px;
+      letter-spacing: .04em
+    }
+
+    .job h3 {
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 500
+    }
+
+    .job .org {
+      color: var(--muted);
+      margin-top: 4px
+    }
+
+    .job ul {
+      list-style: none;
+      margin-top: 16px;
+      display: grid;
+      gap: 8px;
+      max-width: 680px
+    }
+
+    .job li {
+      display: flex;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 15.5px
+    }
+
+    .job li::before {
+      content: "→";
+      color: var(--accent)
+    }
+
+    .job+.job {
+      margin-top: 0;
+      border-top: none
+    }
+
+    @media(max-width:700px) {
+      .job {
+        grid-template-columns: 1fr;
+        gap: 10px
+      }
+    }
+
+    /* projects */
+    .projects {
+      margin-top: 48px;
+      display: grid;
+      gap: 16px
+    }
+
+    .proj {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 8px 28px;
+      align-items: start;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      backdrop-filter: blur(6px);
+      transition: border-color .3s, transform .5s var(--ease)
+    }
+
+    .proj:hover {
+      border-color: var(--accent);
+      transform: translateX(6px)
+    }
+
+    .proj .n {
+      font: 700 13px "JetBrains Mono", monospace;
+      color: var(--dim);
+      padding-top: 8px
+    }
+
+    .proj h3 {
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 500
+    }
+
+    .proj .kind {
+      font: 700 11.5px "JetBrains Mono", monospace;
+      letter-spacing: .12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-top: 2px
+    }
+
+    .proj p {
+      color: var(--muted);
+      margin-top: 12px;
+      font-size: 15.5px;
+      max-width: 640px;
+      grid-column: 2
+    }
+
+    .proj .tags {
+      grid-column: 2;
+      margin-top: 16px
+    }
+
+    .proj .go {
+      font-size: 26px;
+      color: var(--dim);
+      transition: .4s var(--ease)
+    }
+
+    .proj:hover .go {
+      color: var(--accent);
+      transform: translate(4px, -4px)
+    }
+
+    @media(max-width:700px) {
+      .proj {
+        grid-template-columns: 1fr;
+        padding: 24px
+      }
+
+      .proj p,
+      .proj .tags {
+        grid-column: 1
+      }
+
+      .proj .n,
+      .proj .go {
+        display: none
+      }
+    }
+
+    /* contact */
+    .big {
+      font-size: clamp(38px, 7vw, 88px);
+      line-height: 1.03;
+      font-weight: 600
+    }
+
+    .big em {
+      font-style: normal;
+      color: var(--accent)
+    }
+
+    .mail {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 40px;
+      font: 600 clamp(18px, 3vw, 32px) var(--disp);
+      cursor: pointer;
+      flex-wrap: wrap
+    }
+
+    .mail .arrow {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--on);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      transition: .3s
+    }
+
+    .mail:hover .arrow {
+      transform: rotate(45deg)
+    }
+
+    .links {
+      display: flex;
+      gap: 26px;
+      margin-top: 30px;
+      font: 700 12.5px "JetBrains Mono", monospace;
+      letter-spacing: .1em;
+      color: var(--muted)
+    }
+
+    .links a {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 3px
+    }
+
+    .links a:hover {
+      color: var(--accent);
+      border-color: var(--accent)
+    }
+
+    footer {
+      margin-top: 100px;
+      border-top: 1px solid var(--line);
+      padding: 22px 0 36px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--dim);
+      font: 500 12px "JetBrains Mono", monospace;
+      letter-spacing: .04em
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translate(-50%, 30px);
+      opacity: 0;
+      background: var(--text);
+      color: var(--bg);
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 950;
+      transition: .4s var(--ease);
+      pointer-events: none
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0)
+    }
+
+    @media(max-width:600px) {
+      section {
+        padding: 84px 0
+      }
+
+      footer {
+        flex-direction: column
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      * {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important
+      }
+
+      .js .rv {
+        opacity: 1;
+        transform: none
+      }
+    }
+  </style>
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+
+<body>
+  <div id="pre">
+    <div class="pre-box">
+      <div class="pre-name">RUPAL PORWAL</div>
+    </div>
+  </div>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="progress" id="progress"></div>
+
+  <header class="nav">
+    <div class="pill">
+      <a href="#top" class="logo" aria-label="Rupal Porwal — home">RP</a>
+      <nav class="tabs"><a href="#skills" data-t>Skills</a><a href="#experience" data-t>Experience</a><a
+          href="#projects" data-t>Projects</a><a href="#contact" data-t>Contact</a></nav>
+      <div class="nav-r"><a href="#contact" class="cta">Let's Talk</a><button class="round" id="themeBtn"
+          aria-label="Toggle theme">☀</button></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" data-shape="sphere">
+      <div class="wrap">
+        <div class="eyebrow rv">Full-Stack Software Engineer</div>
+        <h1 class="name rv" aria-label="Rupal Porwal">Rupal <b>Porwal</b></h1>
+        <p class="role rv">Indore, India</p>
+        <p class="lede rv">I turn complex requirements into clear, reliable software — across React, Node.js, enterprise
+          systems and AI-assisted workflows.</p>
+        <div class="hero-cta rv"><a href="#projects" class="btn p">View My Work</a><a href="#contact" class="btn">Get in
+            Touch</a></div>
+        <div class="social rv"><a href="#" data-ph="Add your GitHub URL">GITHUB</a><a href="#"
+            data-ph="Add your LinkedIn URL">LINKEDIN</a></div>
+      </div>
+    </section>
+
+    <section id="skills" data-shape="torus">
+      <div class="wrap">
+        <div class="eyebrow rv">Skills &amp; Tools</div>
+        <h2 class="title rv">The toolkit.</h2>
+        <p class="sub rv">The technologies I use to design, build and ship.</p>
+        <div class="grid" id="skillGrid"></div>
+      </div>
+    </section>
+
+    <section id="experience" data-shape="lattice">
+      <div class="wrap">
+        <div class="eyebrow rv">Experience</div>
+        <h2 class="title rv">Where I've worked.</h2>
+        <div class="job rv">
+          <div>
+            <div class="when">2025 — PRESENT</div>
+            <div class="where">Full-time · Indore, India</div>
+          </div>
+          <div>
+            <h3>Software Engineer</h3>
+            <p class="org">Enterprise software &amp; NetSuite customization</p>
+            <ul>
+              <li>SuiteScript, saved searches, SuiteAnalytics and workbooks</li>
+              <li>Reporting and back-order reports</li>
+              <li>Order workflows and business rules</li>
+              <li>Mobile customization and debugging</li>
+            </ul>
+          </div>
+        </div>
+        <div class="job rv">
+          <div>
+            <div class="when">ONGOING</div>
+            <div class="where">Self-directed · Remote</div>
+          </div>
+          <div>
+            <h3>Independent Engineering Projects</h3>
+            <p class="org">Full-stack · AI · product experiments</p>
+            <ul>
+              <li>Meeting intelligence, booking workflows and competitive product search</li>
+              <li>AI-assisted tooling built on external APIs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" data-shape="wave">
+      <div class="wrap">
+        <div class="eyebrow rv">Projects</div>
+        <h2 class="title rv">Things I've built.</h2>
+        <div class="projects" id="projList"></div>
+      </div>
+    </section>
+
+    <section id="contact" data-shape="galaxy">
+      <div class="wrap">
+        <div class="eyebrow rv">Contact</div>
+        <h2 class="big rv">Let's build<br><em>something useful.</em></h2>
+        <p class="sub rv">Open to full-time software engineering roles, remote freelance work and collaborations on
+          interesting products.</p>
+        <div class="rv">
+          <div class="mail" id="mail" tabindex="0" role="button"><span>your-email@example.com</span><span
+              class="arrow">↗</span></div>
+        </div>
+        <div class="links rv"><a href="#" data-ph="Add your LinkedIn URL">LinkedIn</a><a href="#"
+            data-ph="Add your GitHub URL">GitHub</a></div>
+        <footer><span>RUPAL PORWAL — SOFTWARE ENGINEER</span><span>INDORE, INDIA</span><span>© 2026 RUPAL PORWAL</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+    const EMAIL = 'rupal.porwal@gmail.com', reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let tT; function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('show'), 2200) }
+    $$('[data-ph]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); toast(a.dataset.ph) }));
+
+    /* theme */
+    let dot = '215,255,63';
+    function setTheme(l) { document.documentElement[l ? 'setAttribute' : 'removeAttribute']('data-theme', 'light'); $('#themeBtn').textContent = l ? '☾' : '☀'; dot = l ? '88,115,0' : '215,255,63'; try { localStorage.setItem('rp-theme', l ? 'light' : 'dark') } catch (e) { } }
+    try { if (localStorage.getItem('rp-theme') === 'light') setTheme(true) } catch (e) { }
+    $('#themeBtn').addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') !== 'light'));
+
+    /* data */
+    const skills = [['Frontend', ['React', 'JavaScript', 'HTML & CSS', 'Vite', 'GSAP', 'Framer Motion']], ['Backend & APIs', ['Node.js', 'Express', '.NET Core', 'REST APIs', 'GraphQL', 'Authentication']], ['Data', ['MongoDB', 'Mongoose', 'MySQL', 'SQL', 'Entity Framework Core', 'Data modeling']], ['AI & Integration', ['OpenAI API', 'API integration', 'AI workflows', 'Prompt design', 'Data processing']], ['NetSuite & Enterprise', ['SuiteScript', 'Saved Searches', 'SuiteAnalytics', 'Workbooks', 'Reporting', 'Business rules']]];
+    $('#skillGrid').innerHTML = skills.map(s => `<div class="card rv"><h3><i></i>${s[0]}</h3><div class="tags">${s[1].map(t => `<span>${t}</span>`).join('')}</div></div>`).join('');
+    const projects = [
+      ['AdSpire', 'Club + brand collaboration platform', 'Full-stack platform connecting clubs and brands through profiles, inventory, bookings, campaigns and cart workflows — with server-side logic, sessions and email interactions.', ['Node.js', 'Express', 'MongoDB', 'Mongoose', 'EJS']],
+      ['Fireflies Workflow', 'Meeting intelligence · API · AI', 'Brings meeting data and transcripts into a web app, keeps summaries editable and persisted, and lays the foundation for AI-assisted documentation and planning.', ['React', 'Vite', '.NET Core', 'MySQL', 'OpenAI']],
+      ['Barber Booking', 'Mobile-first appointment workflow', 'A customer-first appointment system built around a short path from registration to a confirmed service token, with schedules, breaks and reminders.', ['React', 'Node.js', 'MongoDB']],
+      ['Competitive Price Search', 'Product intelligence · proof of concept', 'A concept for comparing marketplace products, pricing and attributes so shoppers can make faster, more confident decisions.', ['React', 'Node.js', 'APIs', 'AI']]];
+    $('#projList').innerHTML = projects.map((p, i) => `<a href="#" class="proj rv" data-ph="Link this project to its live URL or repo"><span class="n">0${i + 1}</span><div><h3>${p[0]}</h3><div class="kind">${p[1]}</div></div><span class="go">↗</span><p>${p[2]}</p><div class="tags">${p[3].map(t => `<span>${t}</span>`).join('')}</div></a>`).join('');
+    $$('.proj').forEach(a => a.addEventListener('click', e => { e.preventDefault(); toast(a.dataset.ph) }));
+
+    /* email */
+    $('#mail').addEventListener('click', async () => { try { await navigator.clipboard.writeText(EMAIL); toast('Email copied') } catch (e) { location.href = 'mailto:' + EMAIL } });
+    $('#mail').addEventListener('keydown', e => { if (e.key === 'Enter') e.target.click() });
+
+    /* reveal + nav highlight + progress */
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target) } }), { threshold: .12 });
+    const tabs = $$('[data-t]'), ids = ['skills', 'experience', 'projects', 'contact'];
+    const ioT = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const i = ids.indexOf(e.target.id); tabs.forEach((t, j) => t.classList.toggle('on', j === i)) } }), { rootMargin: '-45% 0px -50% 0px' });
+    ids.forEach(i => ioT.observe(document.getElementById(i)));
+    let spin = 0, burst = 0, lastY = scrollY, tick = false;
+    addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { const m = document.documentElement.scrollHeight - innerHeight; $('#progress').style.width = (m > 0 ? scrollY / m * 100 : 0) + '%'; spin = Math.min(.09, spin + Math.abs(scrollY - lastY) * .0007); lastY = scrollY; tick = false }) } }, { passive: true });
+    addEventListener('pointerdown', e => { if (!e.target.closest('a,button,.mail')) burst = 1 });
+
+    /* preloader */
+    setTimeout(() => { $('#pre').classList.add('done'); document.body.classList.add('ready'); $$('.rv').forEach(el => io.observe(el)) }, reduced ? 200 : 2000);
+
+    /* morphing 3D particle field */
+    let mx = -999, my = -999; addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY });
+    (function () {
+      const cv = $('#field'), ctx = cv.getContext('2d'), rnd = Math.random, PI = Math.PI; let W, H, d, cx, cy, R, am = 1;
+      const N = innerWidth < 820 ? 520 : 1100;
+      const shapes = {
+        sphere: n => Array.from({ length: n }, (_, i) => { const y = 1 - i / (n - 1) * 2, r = Math.sqrt(1 - y * y), f = i * 2.39996; return [Math.cos(f) * r, y, Math.sin(f) * r] }),
+        torus: n => Array.from({ length: n }, () => { const u = rnd() * PI * 2, v = rnd() * PI * 2, Rr = .68, r = .3; return [(Rr + r * Math.cos(v)) * Math.cos(u), r * Math.sin(v) * 1.1, (Rr + r * Math.cos(v)) * Math.sin(u)] }),
+        lattice: n => { const m = Math.ceil(Math.cbrt(n)); return Array.from({ length: n }, (_, i) => { const a = i % m, b = Math.floor(i / m) % m, c = Math.floor(i / (m * m)); return [(a / (m - 1) * 2 - 1) * .8, (b / (m - 1) * 2 - 1) * .8, (c / (m - 1) * 2 - 1) * .8] }) },
+        wave: n => { const m = Math.ceil(Math.sqrt(n)); return Array.from({ length: n }, (_, i) => { const x = (i % m) / (m - 1) * 2 - 1, z = Math.floor(i / m) / (m - 1) * 2 - 1; return [x * 1.05, Math.sin(x * 4.2) * Math.cos(z * 4.2) * .28, z * 1.05] }) },
+        galaxy: n => Array.from({ length: n }, (_, i) => { const r = Math.sqrt(rnd()), a = r * 6.5 + (i % 3) * PI * 2 / 3 + (rnd() - .5) * .5; return [Math.cos(a) * r, (rnd() - .5) * .1 * (1.2 - r), Math.sin(a) * r] })
+      };
+      const P = Array.from({ length: N }, () => ({ x: (rnd() - .5) * 5, y: (rnd() - .5) * 5, z: (rnd() - .5) * 5, tx: 0, ty: 0, tz: 0, s: rnd() * 1.1 + .5, n: rnd() }));
+      const assign = name => { const a = shapes[name](N); P.forEach((p, i) => { p.tx = a[i][0]; p.ty = a[i][1]; p.tz = a[i][2] }) };
+      assign('sphere');
+      function size() { W = innerWidth; H = innerHeight; d = Math.min(devicePixelRatio || 1, 2); cv.width = W * d; cv.height = H * d; cv.style.width = W + 'px'; cv.style.height = H + 'px'; ctx.setTransform(d, 0, 0, d, 0, 0); const m = W < 820; cx = m ? W * .5 : W * .72; cy = m ? H * .36 : H * .52; R = Math.min(W, H) * (m ? .34 : .4); am = m ? .6 : 1 }
+      size(); addEventListener('resize', size);
+      const ioS = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) assign(e.target.dataset.shape) }), { rootMargin: '-45% 0px -50% 0px' });
+      $$('[data-shape]').forEach(s => ioS.observe(s));
+      let rotY = 0, rx = 0, ry = 0; const K = reduced ? 1 : .05;
+      (function frame() {
+        rotY += reduced ? 0 : .0025 + spin; spin *= .95; burst *= .93;
+        rx += ((my / H - .5) * .55 - rx) * .05; ry += ((mx / W - .5) * .7 - ry) * .05;
+        const cY = Math.cos(rotY + ry), sY = Math.sin(rotY + ry), cX = Math.cos(rx), sX = Math.sin(rx);
+        ctx.clearRect(0, 0, W, H); ctx.fillStyle = `rgb(${dot})`;
+        for (const p of P) {
+          p.x += (p.tx - p.x) * K; p.y += (p.ty - p.y) * K; p.z += (p.tz - p.z) * K;
+          let x = p.x, y = p.y, z = p.z; if (burst > .01) { const f = 1 + burst * (.4 + p.n * .9); x *= f; y *= f; z *= f }
+          const x1 = x * cY + z * sY, z1 = -x * sY + z * cY, y1 = y * cX - z1 * sX, z2 = y * sX + z1 * cX, k = 2.8 / (2.8 + z2);
+          let sx = cx + x1 * R * k, sy = cy + y1 * R * k;
+          const dx = sx - mx, dy = sy - my, dd = dx * dx + dy * dy; if (dd < 14400) { const q = Math.sqrt(dd) || 1, f = (120 - q) / 120 * 28; sx += dx / q * f; sy += dy / q * f }
+          ctx.globalAlpha = Math.max(0, Math.min(1, (.14 + .5 * (1 - (z2 + 1) / 2)) * am));
+          ctx.beginPath(); ctx.arc(sx, sy, p.s * k, 0, 6.2832); ctx.fill();
+        }
+        requestAnimationFrame(frame);
+      })();
+    })();
+  </script>
+</body>
+
+</html>
