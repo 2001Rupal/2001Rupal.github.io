@@ -632,6 +632,76 @@
       }
     }
 
+    /* education */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 48px
+    }
+
+    .edu-grid .when {
+      font: 700 12px "JetBrains Mono", monospace;
+      letter-spacing: .1em;
+      color: var(--accent);
+      margin-bottom: 12px
+    }
+
+    .edu-grid h3 {
+      font-size: 19px;
+      line-height: 1.3
+    }
+
+    .edu-grid .meta {
+      color: var(--muted);
+      font-size: 14.5px;
+      margin-top: 8px
+    }
+
+    .edu-grid .score {
+      display: inline-block;
+      margin-top: 16px;
+      font: 700 12.5px "JetBrains Mono", monospace;
+      padding: 6px 11px;
+      border-radius: 6px;
+      background: var(--accent-dim);
+      color: var(--accent)
+    }
+
+    .sub-h {
+      margin-top: 64px;
+      font: 700 12px "JetBrains Mono", monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--dim)
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 20px
+    }
+
+    .card ul {
+      list-style: none;
+      margin-top: 16px;
+      display: grid;
+      gap: 8px
+    }
+
+    .card li {
+      display: flex;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 15px
+    }
+
+    .card li::before {
+      content: "→";
+      color: var(--accent)
+    }
+
     /* contact */
     .big {
       font-size: clamp(38px, 7vw, 88px);
@@ -766,7 +836,8 @@
     <div class="pill">
       <a href="#top" class="logo" aria-label="Rupal Porwal — home">RP</a>
       <nav class="tabs"><a href="#skills" data-t>Skills</a><a href="#experience" data-t>Experience</a><a
-          href="#projects" data-t>Projects</a><a href="#contact" data-t>Contact</a></nav>
+          href="#projects" data-t>Projects</a><a href="#education" data-t>Education</a><a href="#contact"
+          data-t>Contact</a></nav>
       <div class="nav-r"><a href="#contact" class="cta">Let's Talk</a><button class="round" id="themeBtn"
           aria-label="Toggle theme">☀</button></div>
     </div>
@@ -780,10 +851,10 @@
         <p class="role rv">Indore, India</p>
         <p class="lede rv">I turn complex requirements into clear, reliable software — across React, Node.js, enterprise
           systems and AI-assisted workflows.</p>
-        <div class="hero-cta rv"><a href="#projects" class="btn p">View My Work</a><a href="#contact" class="btn">Get in
-            Touch</a></div>
-        <div class="social rv"><a href="#" data-ph="Add your GitHub URL">GITHUB</a><a href="#"
-            data-ph="Add your LinkedIn URL">LINKEDIN</a></div>
+        <div class="hero-cta rv"><a href="#projects" class="btn p">View My Work</a><a href="Rupal_Porwal_Resume.pdf"
+            class="btn" target="_blank" rel="noopener" download>Download Resume</a></div>
+        <div class="social rv"><a href="https://github.com/2001Rupal" target="_blank" rel="noopener">GITHUB</a><a
+            href="https://www.linkedin.com/in/rupalporwal24/" target="_blank" rel="noopener">LINKEDIN</a></div>
       </div>
     </section>
 
@@ -802,31 +873,33 @@
         <h2 class="title rv">Where I've worked.</h2>
         <div class="job rv">
           <div>
-            <div class="when">2025 — PRESENT</div>
-            <div class="where">Full-time · Indore, India</div>
+            <div class="when">AUG 2025 — PRESENT</div>
+            <div class="where">Full-time</div>
           </div>
           <div>
             <h3>Software Engineer</h3>
-            <p class="org">Enterprise software &amp; NetSuite customization</p>
+            <p class="org">Virim Infotech</p>
             <ul>
-              <li>SuiteScript, saved searches, SuiteAnalytics and workbooks</li>
-              <li>Reporting and back-order reports</li>
-              <li>Order workflows and business rules</li>
-              <li>Mobile customization and debugging</li>
+              <li>Around a year of professional experience across software development, debugging, enterprise workflows
+                and production support</li>
+              <li>Worked with React, .NET Core, version control, NetSuite reporting and scripting, SuiteScript,
+                Workbooks, Mode Analytics and Snowflake</li>
+              <li>Learn new tools and frameworks quickly, delivering stable, production-ready features in short
+                development cycles</li>
             </ul>
           </div>
         </div>
         <div class="job rv">
           <div>
-            <div class="when">ONGOING</div>
-            <div class="where">Self-directed · Remote</div>
+            <div class="when">MAY — AUG 2025</div>
+            <div class="where">9-week program</div>
           </div>
           <div>
-            <h3>Independent Engineering Projects</h3>
-            <p class="org">Full-stack · AI · product experiments</p>
+            <h3>Pre-Training Program: Python &amp; Data</h3>
+            <p class="org">Revature</p>
             <ul>
-              <li>Meeting intelligence, booking workflows and competitive product search</li>
-              <li>AI-assisted tooling built on external APIs</li>
+              <li>Completed a 9-week program in Python essentials and foundations in data</li>
+              <li>Learned the fundamentals of SQL, Python, SDLC and Big Data</li>
             </ul>
           </div>
         </div>
@@ -841,18 +914,72 @@
       </div>
     </section>
 
+    <section id="education" data-shape="torus">
+      <div class="wrap">
+        <div class="eyebrow rv">Education</div>
+        <h2 class="title rv">Where I studied.</h2>
+        <div class="edu-grid">
+          <div class="card rv">
+            <div class="when">2023 — 2025</div>
+            <h3>Master of Computer Application (MCA)</h3>
+            <p class="meta">School of Computer Science and IT, DAVV, Indore (M.P.)</p>
+            <span class="score">CGPA 8.48 / 10</span>
+          </div>
+          <div class="card rv">
+            <div class="when">2020 — 2023</div>
+            <h3>B.Com with Computer Application</h3>
+            <p class="meta">Sanskar College of Professional Studies, Indore (M.P.)</p>
+            <span class="score">81.55%</span>
+          </div>
+          <div class="card rv">
+            <div class="when">2019 — 2020</div>
+            <h3>12th, Commerce with Math</h3>
+            <p class="meta">Trilok Chand Jain H.S School, Indore (M.P.)</p>
+            <span class="score">89.4%</span>
+          </div>
+          <div class="card rv">
+            <div class="when">2018 — 2019</div>
+            <h3>10th</h3>
+            <p class="meta">Trilok Chand Jain H.S School, Indore (M.P.)</p>
+            <span class="score">84%</span>
+          </div>
+        </div>
+
+        <div class="sub-h rv">Certificates, achievements &amp; interests</div>
+        <div class="two">
+          <div class="card rv">
+            <h3><i></i>Certificates</h3>
+            <div class="tags">
+              <span>Cyber Gyan Online Training · CDAC</span>
+              <span>Core Java · OSOP Coding</span>
+              <span>DSA Java · Apna College</span>
+              <span>Basic Java · HackerRank</span>
+            </div>
+          </div>
+          <div class="card rv">
+            <h3><i></i>Achievements &amp; interests</h3>
+            <ul>
+              <li>Rewarded by the Madhya Pradesh Govt. for scoring more than 85% in 12th standard</li>
+              <li>Enjoy reading, running and cooking, and I'm enthusiastic about research and development</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="contact" data-shape="galaxy">
       <div class="wrap">
         <div class="eyebrow rv">Contact</div>
         <h2 class="big rv">Let's build<br><em>something useful.</em></h2>
-        <p class="sub rv">Open to full-time software engineering roles, remote freelance work and collaborations on
-          interesting products.</p>
+        <p class="sub rv">Open to full-time software engineering roles and collaborations on interesting products.</p>
         <div class="rv">
-          <div class="mail" id="mail" tabindex="0" role="button"><span>your-email@example.com</span><span
+          <div class="mail" id="mail" tabindex="0" role="button"><span>rupal24porwal@gmail.com</span><span
               class="arrow">↗</span></div>
         </div>
-        <div class="links rv"><a href="#" data-ph="Add your LinkedIn URL">LinkedIn</a><a href="#"
-            data-ph="Add your GitHub URL">GitHub</a></div>
+        <div class="links rv"><a href="https://www.linkedin.com/in/rupalporwal24/" target="_blank"
+            rel="noopener">LinkedIn</a><a href="https://github.com/2001Rupal" target="_blank"
+            rel="noopener">GitHub</a><a href="Rupal_Porwal_Resume.pdf" target="_blank" rel="noopener"
+            download>Resume</a></div>
         <footer><span>RUPAL PORWAL — SOFTWARE ENGINEER</span><span>INDORE, INDIA</span><span>© 2026 RUPAL PORWAL</span>
         </footer>
       </div>
@@ -862,7 +989,7 @@
 
   <script>
     const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
-    const EMAIL = 'rupal.porwal@gmail.com', reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const EMAIL = 'rupal24porwal@gmail.com', reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let tT; function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('show'), 2200) }
     $$('[data-ph]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); toast(a.dataset.ph) }));
 
@@ -873,15 +1000,20 @@
     $('#themeBtn').addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') !== 'light'));
 
     /* data */
-    const skills = [['Frontend', ['React', 'JavaScript', 'HTML & CSS', 'Vite', 'GSAP', 'Framer Motion']], ['Backend & APIs', ['Node.js', 'Express', '.NET Core', 'REST APIs', 'GraphQL', 'Authentication']], ['Data', ['MongoDB', 'Mongoose', 'MySQL', 'SQL', 'Entity Framework Core', 'Data modeling']], ['AI & Integration', ['OpenAI API', 'API integration', 'AI workflows', 'Prompt design', 'Data processing']], ['NetSuite & Enterprise', ['SuiteScript', 'Saved Searches', 'SuiteAnalytics', 'Workbooks', 'Reporting', 'Business rules']]];
+    const skills = [
+      ['Languages', ['JavaScript', 'Core Java', 'SQL', 'Python', 'HTML & CSS']],
+      ['Frameworks & APIs', ['React JS', 'Node.js', 'Express.js', '.NET Core', 'Bootstrap', 'REST', 'GraphQL']],
+      ['Databases', ['MySQL', 'PostgreSQL', 'MongoDB', 'Snowflake']],
+      ['NetSuite & Analytics', ['NetSuite Reporting', 'NetSuite Scripting', 'SuiteScript', 'Workbooks', 'Mode Analytics']],
+      ['AI Tools', ['GPT', 'Codex', 'Claude', 'Antigravity', 'Cursor']],
+      ['Fundamentals & Tools', ['DSA', 'OOPs', 'DBMS', 'Operating Systems', 'Cloud Computing', 'SDLC', 'Git', 'GitHub', 'VS Code', 'Visual Studio', 'NetBeans']]];
     $('#skillGrid').innerHTML = skills.map(s => `<div class="card rv"><h3><i></i>${s[0]}</h3><div class="tags">${s[1].map(t => `<span>${t}</span>`).join('')}</div></div>`).join('');
     const projects = [
-      ['AdSpire', 'Club + brand collaboration platform', 'Full-stack platform connecting clubs and brands through profiles, inventory, bookings, campaigns and cart workflows — with server-side logic, sessions and email interactions.', ['Node.js', 'Express', 'MongoDB', 'Mongoose', 'EJS']],
-      ['Fireflies Workflow', 'Meeting intelligence · API · AI', 'Brings meeting data and transcripts into a web app, keeps summaries editable and persisted, and lays the foundation for AI-assisted documentation and planning.', ['React', 'Vite', '.NET Core', 'MySQL', 'OpenAI']],
-      ['Barber Booking', 'Mobile-first appointment workflow', 'A customer-first appointment system built around a short path from registration to a confirmed service token, with schedules, breaks and reminders.', ['React', 'Node.js', 'MongoDB']],
-      ['Competitive Price Search', 'Product intelligence · proof of concept', 'A concept for comparing marketplace products, pricing and attributes so shoppers can make faster, more confident decisions.', ['React', 'Node.js', 'APIs', 'AI']]];
-    $('#projList').innerHTML = projects.map((p, i) => `<a href="#" class="proj rv" data-ph="Link this project to its live URL or repo"><span class="n">0${i + 1}</span><div><h3>${p[0]}</h3><div class="kind">${p[1]}</div></div><span class="go">↗</span><p>${p[2]}</p><div class="tags">${p[3].map(t => `<span>${t}</span>`).join('')}</div></a>`).join('');
-    $$('.proj').forEach(a => a.addEventListener('click', e => { e.preventDefault(); toast(a.dataset.ph) }));
+      ['AdSpire', 'Full-stack platform', 'Platform that lets brands book club services and inventory for events, with RESTful APIs, dynamic EJS views, email notifications, secure booking, a quote flow and inventory management.', ['JavaScript', 'Node.js', 'Express.js', 'MongoDB', 'EJS', 'NodeMailer']],
+      ['Fireflies Workflow', 'Meeting intelligence · AI', 'Workflow that fetches meeting data and transcripts, keeps summaries editable and persisted, and prepares meeting information for AI-assisted documentation and project planning.', ['React', '.NET Core', 'MySQL', 'GraphQL', 'REST', 'OpenAI']],
+      ['Barber Booking', 'Mobile-first appointment flow', 'Appointment flow covering registration, service selection, scheduling and token generation, with barber working hours, breaks, date-specific exceptions and reminders.', ['React', 'Node.js', 'MongoDB', 'REST API']],
+      ['Competitive Price Search', 'Product intelligence · proof of concept', 'Proof of concept for finding relevant marketplace products and comparing pricing, attributes and competitive information.', ['React', 'Node.js', 'APIs', 'AI', 'Data Processing']]];
+    $('#projList').innerHTML = projects.map((p, i) => `<div class="proj rv"><span class="n">0${i + 1}</span><div><h3>${p[0]}</h3><div class="kind">${p[1]}</div></div><span class="go"></span><p>${p[2]}</p><div class="tags">${p[3].map(t => `<span>${t}</span>`).join('')}</div></div>`).join('');
 
     /* email */
     $('#mail').addEventListener('click', async () => { try { await navigator.clipboard.writeText(EMAIL); toast('Email copied') } catch (e) { location.href = 'mailto:' + EMAIL } });
@@ -889,7 +1021,7 @@
 
     /* reveal + nav highlight + progress */
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target) } }), { threshold: .12 });
-    const tabs = $$('[data-t]'), ids = ['skills', 'experience', 'projects', 'contact'];
+    const tabs = $$('[data-t]'), ids = ['skills', 'experience', 'projects', 'education', 'contact'];
     const ioT = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const i = ids.indexOf(e.target.id); tabs.forEach((t, j) => t.classList.toggle('on', j === i)) } }), { rootMargin: '-45% 0px -50% 0px' });
     ids.forEach(i => ioT.observe(document.getElementById(i)));
     let spin = 0, burst = 0, lastY = scrollY, tick = false;
